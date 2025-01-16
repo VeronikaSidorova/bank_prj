@@ -4,19 +4,13 @@ from typing import Union
 def get_mask_card_number(card_number: Union[int, str]) -> str:
     """функция, которая принимает на вход номер карты и возвращает ее маску"""
     card_number_for_mask = str(card_number)
-    if len(card_number_for_mask) == 16 and card_number_for_mask.isdigit() == True:
-        return f"{card_number_for_mask[0:4]} {card_number_for_mask[4:6]}** **** {card_number_for_mask[-4:]}"
-    else:
-        return "Введены некорректные данные!"
+    return f"{card_number_for_mask[:-16]}{card_number_for_mask[-16:-12]} {card_number_for_mask[-12:-14]}** **** {card_number_for_mask[-4:]}"
 
 
 def get_mask_account(account_number: Union[int, str]) -> str:
     """функция, которая принимает на вход номер счета и возвращает его маску"""
     account_number_for_mask = str(account_number)
-    if len(account_number_for_mask) == 20 and account_number_for_mask.isdigit() == True:
-        return f"**{account_number_for_mask[-4:]}"
-    else:
-        return "Введены некорректные данные!"
+    return f"{account_number_for_mask[:-20]}**{account_number_for_mask[-4:]}"
 
 
 print("Введите номер карты: ")
