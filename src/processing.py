@@ -1,27 +1,29 @@
-from typing import Iterable
-
-
-def filter_by_state(list_for_filter: Iterable[list], state: str = 'EXECUTED') -> list:
+def filter_by_state(list_for_filter: list[dict[str, str | int]], state: str = "EXECUTED") -> list:
     """Функция, которая принимает список словарей и опционально
     значение для ключа state(по умолчанию 'EXECUTED'). Функция
     возвращает новый список словарей, содержащий только те словари,
     у которых ключ state соответствует указанному значению."""
-    filter_list = []
+    filter_list_by_state = []
     for search_state in list_for_filter:
-        if search_state['state'] == state:
-            filter_list.append(search_state)
+        if search_state["state"] == state:
+            filter_list_by_state.append(search_state)
         else:
             continue
-    return filter_list
+    return filter_list_by_state
 
 
-def sort_by_date():
-    pass
+def sort_by_date(list_date_for_filter: list[dict[str, str | int]], user_reverse: bool = True) -> list:
+    """Функция, которая принимает список словарей и необязательный
+    параметр, задающий порядок сортировки (по умолчанию — убывание).
+    Функция должна возвращать новый список, отсортированный по дате"""
+    return sorted(list_date_for_filter, key=lambda x: x["date"], reverse=user_reverse)
 
-test_list = [
-    {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-    {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-    {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-    {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
+
+test_list: list[dict[str, str | int] | dict[str, str | int] | dict[str, str | int] | dict[str, str | int]] = [
+    {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+    {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+    {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+    {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
 ]
 print(filter_by_state(test_list))
+print(sort_by_date(test_list))
