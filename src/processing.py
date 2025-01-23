@@ -4,19 +4,19 @@ def filter_by_state(list_for_filter: list[dict[str, str | int]], state: str = "E
     возвращает новый список словарей, содержащий только те словари,
     у которых ключ state соответствует указанному значению."""
     filter_list_by_state = []
-    for search_state in list_for_filter:
-        if search_state["state"] == state:
-            filter_list_by_state.append(search_state)
+    for find_state in list_for_filter:
+        if find_state["state"] == state:
+            filter_list_by_state.append(find_state)
         else:
             continue
     return filter_list_by_state
 
 
-def sort_by_date(list_date_for_filter: list[dict[str, str | int]], user_reverse: bool = True) -> list:
+def sort_by_date(list_date_for_filter: list[dict[str, str | int]], sort_order: bool = True) -> list:
     """Функция, которая принимает список словарей и необязательный
     параметр, задающий порядок сортировки (по умолчанию — убывание).
     Функция должна возвращать новый список, отсортированный по дате"""
-    return sorted(list_date_for_filter, key=lambda x: x["date"], reverse=user_reverse)
+    return sorted(list_date_for_filter, key=lambda x: x["date"], reverse=sort_order)
 
 
 test_list: list[dict[str, str | int] | dict[str, str | int] | dict[str, str | int] | dict[str, str | int]] = [
