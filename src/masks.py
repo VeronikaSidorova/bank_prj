@@ -11,8 +11,7 @@ def get_mask_card_number(card_number: Union[int, str]) -> str:
     else:
         if card_number_for_mask == "":
             return ""
-        else:
-            return "Введены некорректные данные"
+        return "Введены некорректные данные"
 
 
 def get_mask_account(account_number: Union[int, str]) -> str:
@@ -21,6 +20,8 @@ def get_mask_account(account_number: Union[int, str]) -> str:
     if account_number_for_mask.isdigit():
         return f"**{account_number_for_mask[-4:]}"
     else:
+        if account_number_for_mask == "":
+            return ""
         return "Введены некорректные данные"
 
 
