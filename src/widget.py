@@ -16,9 +16,11 @@ def mask_account_card(user_number: Union[str]) -> str:
 def get_date(user_date: Union[str]) -> str:
     """Функция, которая выводит дату из строки"""
     user_date_update = str(user_date)
+    if user_date_update == "":
+        return ""
     return f"{user_date_update[8:10]}.{user_date_update[5:7]}.{user_date_update[:4]}"
 
 
-print("Введите номер карты или счета: ")
-print(mask_account_card(user_number=input()))
-print(get_date(user_date=input()))
+# print("Введите номер карты или счета: ")
+# print(mask_account_card(user_number=input(str())))
+# print(get_date(user_date=input()))
