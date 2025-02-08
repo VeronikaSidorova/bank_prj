@@ -1,23 +1,43 @@
-from typing import Generator
+from typing import Any, Generator
 
-def filter_by_currency(transactions: list, currency_code: str) -> Generator[dict]:
+
+def filter_by_currency(transactions: list, currency_code: str) -> Generator[str | Any, None, Any]:
+    """Функция, которая принимает на вход список словарей, представляющих
+    транзакции и возвращает итератор, который поочередно выдает транзакции, где валюта операции
+    соответствует заданной (например, USD)"""
     for transaction in transactions:
         if transaction["operationAmount"]["currency"]["code"] == currency_code:
             yield transaction
+    while True:
+        yield "Операции с указанным кодом отсутствуют"
 
 
 def transaction_descriptions(transactions: list) -> Generator[str]:
+    """Принимает список словарей с транзакциями и возвращает
+    описание каждой операции по очереди"""
     for transaction in transactions:
         yield transaction["description"]
+    while True:
+        yield "Операции отсутствуют"
 
 
 def card_number_generator(start: int, stop: int) -> Generator[str]:
+    """Генератор может сгенерировать номера карт в
+    заданном диапазоне от 0000 0000 0000 0001 до 9999 9999 9999 9999"""
     zero_number = "0000000000000000"
     for number in range(start, stop + 1):
-        if len(zero_number) == 16:
+        if start < 0:
+            yield "Некорректное значение"
+            break
+        else:
             new_card_number = str(f"{zero_number[:-len(str(number))]}{number}")
-            yield f"{new_card_number[:4]} {new_card_number[4:8]} {new_card_number[8:12]} {new_card_number[12:]}"
-        yield ""
+            if len(str(new_card_number)) == 16:
+                yield f"{new_card_number[:4]} {new_card_number[4:8]} {new_card_number[8:12]} {new_card_number[12:]}"
+            else:
+                if stop > 9999999999999999:
+                    yield "Некорректное значение"
+                    break
+
 
 # example_transactions = (
 #     [
@@ -99,16 +119,16 @@ def card_number_generator(start: int, stop: int) -> Generator[str]:
 #     ]
 # )
 
-# for card_number in card_number_generator(1, 5):
+# for card_number in card_number_generator(3, 5):
 #     print(card_number)
 
 # usd_transactions = filter_by_currency(example_transactions, "USD")
 # rub_transactions = filter_by_currency(example_transactions, "RUB")
 # a = filter_by_currency(example_transactions, "")
 # for _ in range(2):
-#     print(next(usd_transactions))
-    # print(next(rub_transactions))
-    # print(next(a))
+# print(next(usd_transactions))
+# print(next(rub_transactions))
+# print(next(a))
 
 # example_descriptions = transaction_descriptions(example_transactions)
 # for _ in range(5):
