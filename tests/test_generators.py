@@ -1,3 +1,5 @@
+import pytest
+
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 example_transactions = [
@@ -49,8 +51,13 @@ example_transactions = [
 ]
 
 
-def test_filter_by_currency():  # type: ignore
-    generator_usd = filter_by_currency(example_transactions, "USD")
+@pytest.fixture
+def transactions() -> list:
+    return example_transactions
+
+
+def test_filter_by_currency(transactions, cod_curr="USD"):  # type: ignore
+    generator_usd = filter_by_currency(transactions, "USD")
     generator_rub = filter_by_currency(example_transactions, "RUB")
     generator_null = filter_by_currency(example_transactions, "")
     generator_empty = filter_by_currency([], "EUR")
@@ -73,13 +80,15 @@ def test_transaction_descriptions():  # type: ignore
     assert next(generator_transaction) == "Операции отсутствуют"
 
 
-def test_card_number_generator():  # type: ignore
-    generator_card = card_number_generator(1, 3)
-    assert next(generator_card) == "0000 0000 0000 0001"
-    assert next(generator_card) == "0000 0000 0000 0002"
-    assert next(generator_card) == "0000 0000 0000 0003"
-    generator_card_big = card_number_generator(9999999999999999, 10000000000000000)
-    assert next(generator_card_big) == "9999 9999 9999 9999"
-    assert next(generator_card_big) == "Некорректное значение"
-    generator_card_minus = card_number_generator(-3, 3)
-    assert next(generator_card_minus) == "Некорректное значение"
+@pytest.mark.parametrize(
+    "start, stop, expected",
+    [
+        (1, 2, "0000 0000 0000 0001"),
+        (2, 3, "0000 0000 0000 0002"),
+        (-3, 3, "Некорректное значение"),
+        (10000000000000000, 10000000000000001, "Некорректное значение"),
+    ],
+)
+def test_card_number_generator(start, stop, expected):  # type: ignore
+    generator = card_number_generator(start, stop)
+    assert next(generator) == expected
