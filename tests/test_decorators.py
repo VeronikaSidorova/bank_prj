@@ -1,11 +1,12 @@
 import pytest
 
-from src.decorators import log
+from src.decorators import log, my_function
 
-# def test_my_function_success(capsys):
-#     my_function(1, 2)
-#     captured = capsys.readouterr()
-#     assert "my_function ok" in captured.out
+
+def test_my_function_success(capsys): # type: ignore
+    my_function(1, 2)
+    captured = capsys.readouterr()
+    assert "my_function ok" in captured.out
 
 
 def test_my_function_error(capsys):  # type: ignore
