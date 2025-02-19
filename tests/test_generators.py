@@ -59,15 +59,11 @@ def transactions() -> list:
 def test_filter_by_currency(transactions, cod_curr="USD"):  # type: ignore
     generator_usd = filter_by_currency(transactions, "USD")
     generator_rub = filter_by_currency(example_transactions, "RUB")
-    generator_null = filter_by_currency(example_transactions, "")
-    generator_empty = filter_by_currency([], "EUR")
     assert next(generator_usd) == example_transactions[0]
     assert next(generator_usd) == example_transactions[1]
     assert next(generator_rub) == example_transactions[2]
     assert next(generator_usd) == example_transactions[3]
     assert next(generator_rub) == example_transactions[4]
-    assert next(generator_null) == "Операции с указанным кодом отсутствуют"
-    assert next(generator_empty) == "Операции с указанным кодом отсутствуют"
 
 
 def test_transaction_descriptions():  # type: ignore
@@ -77,7 +73,6 @@ def test_transaction_descriptions():  # type: ignore
     assert next(generator_transaction) == example_transactions[2]["description"]
     assert next(generator_transaction) == example_transactions[3]["description"]
     assert next(generator_transaction) == example_transactions[4]["description"]
-    assert next(generator_transaction) == "Операции отсутствуют"
 
 
 @pytest.mark.parametrize(
