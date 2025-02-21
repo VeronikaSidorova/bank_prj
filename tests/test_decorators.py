@@ -3,7 +3,7 @@ import pytest
 from src.decorators import log, my_function
 
 
-def test_my_function_success(capsys): # type: ignore
+def test_my_function_success(capsys):  # type: ignore
     my_function(1, 2)
     captured = capsys.readouterr()
     assert "my_function ok" in captured.out
