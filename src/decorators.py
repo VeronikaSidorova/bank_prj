@@ -10,7 +10,7 @@ def log(filename: Optional[str] = None) -> Callable:
     if filename is None:
         handler = logging.StreamHandler()
     else:
-        handler = logging.FileHandler(filename)
+        handler = logging.FileHandler(filename, "w")
     logger.addHandler(handler)
 
     def decorator(func: Any) -> Any:
