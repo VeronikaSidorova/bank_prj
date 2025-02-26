@@ -3,7 +3,7 @@ from typing import Union
 
 logger = logging.getLogger("masks")
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler("../logs/masks.log", "w")
+file_handler = logging.FileHandler("/Users/veronikasidorova/bank_prj/logs/masks.log", "w")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
