@@ -24,7 +24,7 @@ def convertion_func(transaction_list: list):  # type: ignore
         else:
             url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={from_code}&amount={amount}"
             response = requests.request("GET", url, headers=headers, data=payload)
-            status_code = response.status_code
+            # status_code = response.status_code
             result = response.json()
             yield float(result.get("result"))
 
