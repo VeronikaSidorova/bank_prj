@@ -46,13 +46,13 @@ def test_categorize_transactions():  # type: ignore
     ]
 
     # Определяем категории
-    categories = ["Grocery", "Online", "Gas", "Gadget"]
+    categories = ["Grocery shopping", "Online purchase", "Gas station", "Gadget store"]
 
     # Вызываем функцию
     result = categorize_transactions(mock_transactions, categories)
 
     # Проверяем результаты
-    assert result["Grocery"] == 1
-    assert result["Online"] == 1
-    assert result["Gas"] == 1
-    assert result["Gadget"] == 1
+    assert result["Grocery shopping"] == 1
+    assert result["Online purchase"] == 1
+    assert result["Gas station"] == 1
+    assert result["Gadget store"] == 1

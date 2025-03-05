@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 
 # from utils import all_transaction
 
@@ -22,23 +23,17 @@ def filter_transactions(transactions: list, search_string: str) -> list:
 
 
 def categorize_transactions(transactions: list, categories: str) -> dict:
-    # Создаем словарь для хранения категорий и их счетчиков
-    category_counts = {category: 0 for category in categories}
+    # Извлекаем описания из транзакций
+    descriptions = [transaction.get("description") for transaction in transactions]
 
-    # Проходим по списку транзакций
-    for transaction in transactions:
-        descript = transaction.get("description", "")
+    # Используем Counter для подсчета, отфильтровываем только категории из списка
+    category_counts = Counter(desc for desc in descriptions if desc in categories)
 
-        # Увеличиваем счетчик в соответствующей категории, если найдено совпадение
-        for category in categories:
-            if category in descript:
-                category_counts[category] += 1
-
-    return category_counts
+    # Приводим к желаемому формату, возвращаем 0, если категории нет
+    return {category: category_counts.get(category, 0) for category in categories}
 
 
-# print(f"Введите описание для фильтрации")
-# search_cat = ["Перевод"]
-# print(categorize_transactions(all_transaction("/Users/veronikasidorova/
-# bank_prj/data/operations.json"),
+# # print(f"Введите описание для фильтрации")
+# search_cat = ["Открытие вклада"]
+# print(categorize_transactions(all_transaction("/Users/veronikasidorova/bank_prj/data/operations.json"),
 # categories = search_cat))
