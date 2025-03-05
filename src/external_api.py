@@ -7,7 +7,7 @@ from src.utils import all_transaction
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
-transactions = all_transaction("../data/operations.json")
+transactions = all_transaction("/Users/veronikasidorova/bank_prj/data/operations.json")
 
 
 def convertion_func(transaction_list: list):  # type: ignore
